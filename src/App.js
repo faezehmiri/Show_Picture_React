@@ -1,23 +1,39 @@
-import logo from './logo.svg';
+
 import './App.css';
+import { useState, useEffect } from 'react'
 
 function App() {
+
+const [image, setimage] = useState([])
+  useEffect(() => {
+
+    var headersapi = {
+      method: 'GET',
+      
+      Headers: {
+        'Content-Type': 'application/json'
+        
+      },
+    }
+
+
+    const showpicture = async () => {
+      var imageeData = await fetch('https://random-d.uk/api/random', headersapi)
+        .then(Response =>
+          Response.json())
+        .then(data => {
+          setimage(data)
+        })
+    }
+    showpicture()
+  })
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <img src={image.url}/>
+             
     </div>
   );
 }
